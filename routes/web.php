@@ -27,6 +27,7 @@ Route::post('/add', [App\Http\Controllers\CadastroControllers::class,'add'])->mi
 Route::get('/{id}/edit', [App\Http\Controllers\CadastroControllers::class,'edit'])->middleware('auth');
 Route::post('/update', [App\Http\Controllers\CadastroControllers::class,'update'])->middleware('auth');
 Route::delete('/{id}/delete', [App\Http\Controllers\CadastroControllers::class,'delete'])->middleware('auth');
+Route::get('/apiCepJson/{cep}/', [App\Http\Controllers\CadastroControllers::class,'getApiCepJson'])->middleware('auth');
 
 Route::get('/', function () {
     return view('welcome');

@@ -24,7 +24,6 @@
         <script src="{{ asset('/js/next.config.js')}}" ></script>  
         <script src="{{ asset('/js/app.js')}}" ></script>
         <script type="text/javascript">
-          
            window.onload = function () {
                  new Vue({
                     el : '#app',
@@ -45,41 +44,34 @@
                     },
                     methods : {
                         searchCep () {
-                             
                             if(this.cep.length == 8) {
-
-                                alert('cep: '+this.cep);
-                                headers=  {
-                                    'Access-Control-Allow-Credentials':'*',
-                                    'Access-Control-Allow-Origin': 'http://127.0.0.1:8000/',
-                                    'Access-Control-Allow-Headers':'*,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization,access-Control-Allow-Credentials',
-                                    'Content-Type': 'application/json',
-                                };
-                                 
                                 
-                                //axios.get('https://cep.awesomeapi.com.br/json/'+ this.cep,{headers, crossdomain: true})
-                                
-                                axios.get(`https://viacep.com.br/ws/${ this.cep }/json/`,{headers, crossdomain: true})
+                                axios.get("{{url('/apiCepJson')}}/"+ this.cep)
                                 .then( response => {
-                                    this.resp=this.response.text;
-                                    alert('reponse: '+this.resp);    
-                                    this.estado=this.resp.state;
-                                    this.cidade=this.resp.city;
-                                    this.baiiro=this.resp.district;
-                                    this.endereco=this.resp.address;
-                           
+                                    data=response.data;
+                                    this.cidade=data.city;
+                                    this.bairro=data.district;
+                                    this.endereco=data.address;
+                    
+                                    const endereco = document.getElementById("endereco");
+
+                                    for(i=1; i<=estado.options.length ;i++){
+
+                                        //alert(estado.options[i].value+'=='+data.state);
+                                        if(estado.options[i].value==data.state){
+                                            estado.options[i].selected =  'selected="selected"';
+                                        }
+                                    }
+                                    
                                 })
                                 .catch( error => console.log(error) );
-                                
-                                alert('reponse: '+this.response.data);
-                                
                      
                             }
                         }
                     }
                 })
             }
-            
+
         </script>
     </head>
     <body class="antialiased"  >
@@ -191,7 +183,7 @@
                                         <form name='form' method=post action="{{url('/add')}}">
                                          @csrf
                                        
-                                        CEP: <input class="input" style='border:1px solid black;' name='cep' type="text" v-model="cep" @keyup="searchCep()" size='' maxlength='' placeholder="digite o cep aqui"><br>
+                                        CEP: <input class="input" style='border:1px solid black;' name='cep' type="text" v-model="cep" @keyup="searchCep()" size='' maxlength='' v-model="estado" placeholder="digite o cep aqui"><br>
                                         Estado: <select id="estado" name="estado" class='input'style='border:1px solid black;' >
                                             <option value="" selected>Selecione um Estado</option>
                                                 <option value="AC">Acre</option>
@@ -224,11 +216,11 @@
                                                 <option value="EX">Estrangeiro</option>
                                             </select>
                                             <br/>    
-                                        Cidade: <input class='input' style='border:1px solid black;' name='cidade' size='' maxlength=''><br>
-                                        Bairro: <input class='input' style='border:1px solid black;' name='bairro' size='' maxlength=''><br>
-                                        Endereço: <input class='input' style='border:1px solid black;' name='endereco' size='' maxlength=''><br>
-                                        Numero: <input class='input' style='border:1px solid black;' name='numero' size='' maxlength=''><br>
-                                        Complemento: <input class='input' style='border:1px solid black;' name='complemento' size='' maxlength=''><br>
+                                        Cidade: <input v-model="cidade" class='input' style='border:1px solid black;' name='cidade' size='' maxlength=''><br>
+                                        Bairro: <input v-model="bairro" class='input' style='border:1px solid black;' name='bairro' size='' maxlength=''><br>
+                                        Endereço: <input v-model="endereco" class='input' style='border:1px solid black;' name='endereco' size='' maxlength=''><br>
+                                        Numero: <input  class='input' style='border:1px solid black;' name='numero' size='' maxlength=''><br>
+                                        Complemento: <input  class='input' style='border:1px solid black;' name='complemento' size='' maxlength=''><br>
                                         Contato: <input class='input' style='border:1px solid black;' name='name' size='' maxlength=''><br>
                                         E-mail: <input class='input' style='border:1px solid black;' name='email' size='' maxlength=''><br>
                                         Telefone: <input class='input' style='border:1px solid black;' name='telefone' size='' maxlength=''><br><p>

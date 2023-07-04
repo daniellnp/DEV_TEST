@@ -1,16 +1,20 @@
 # DEV_TEST
 SHIPSMART_DEV_TEST
+- **Pre requisito php 7+, SQLite, sqlite-Studio, instalado o Composer
+- **Clonar o Projeto 
+- **Acessar a pasta pelo CMD  a pasta do projeto
 - **Test function
-- **php artisan server
-- **php artisan migrate
-- **criar login
-- **logar
-- **link
-- **lickar>> home
-- **clickar>> "SHIPSMART DEV TEST"
-
-
-
+- **digite o comando "php artisan serve" e acesse o link http://127.0.0.1:8000
+- **com sqlite instalado crie o arquivo database.db ou pode utilizar o arquivo salvo no projeto "./database/arquivo/database.db"  acesse o arquivo pelo sqlite-studio, configurar no projeto o caminho do DB
+- **abra o arquivo em um notepad .env e localize a variavel DB_CONNECTION=sqlite e configure sem database.db na variavel DB_DATABASE
+- **execute no cmd do projeto php artisan migrate
+- **clicar no link registrar login
+- **fazer o login
+- **licar no link>> home
+- **clicar no  link>> "SHIPSMART DEV TEST"
+- **o Crud a seguir  vai cadstrar e editar e excluir cadastro de contado com endereço
+- **Test unit command: php artisan test
+# 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
